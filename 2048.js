@@ -1,9 +1,9 @@
-function game2048(container)
+function game2048(container)//新建方法
 {
  this.container = container;
  this.tiles = new Array(16);
 }
-game2048.prototype = {
+game2048.prototype = {//修改方法原型
  init: function(){
   for(var i = 0, len = this.tiles.length; i < len; i++){
    var tile = this.newTile(0);
@@ -34,7 +34,7 @@ game2048.prototype = {
   var rTile = zeroTiles[Math.floor(Math.random() * zeroTiles.length)];
   this.setTileVal(rTile, Math.random() < 0.8 ? 2 : 4);
  },
- move:function(direction){
+ move:function(direction){//移动触发事件
   var j;
   switch(direction){
    case 'W':
@@ -76,7 +76,7 @@ game2048.prototype = {
   }
   this.randomTile();
  },
- merge: function(prevTile, currTile){
+ merge: function(prevTile, currTile){//合并相同数字
   var prevVal = prevTile.getAttribute('val');
   var currVal = currTile.getAttribute('val');
   if(currVal != 0){
@@ -93,14 +93,14 @@ game2048.prototype = {
  equal: function(tile1, tile2){
   return tile1.getAttribute('val') == tile2.getAttribute('val');
  },
- max: function(){
+ max: function(){//判断是否到2018
   for(var i = 0, len = this.tiles.length; i < len; i++){
    if(this.tiles[i].getAttribute('val') == 2048){
     return true;
    }
   }
  },
- over: function(){
+ over: function(){//判断游戏是否结束
   for(var i = 0, len = this.tiles.length; i < len; i++){
    if(this.tiles[i].getAttribute('val') == 0){
     return false;
@@ -118,7 +118,7 @@ game2048.prototype = {
   }
   return true;
  },
- clean: function(){
+ clean: function(){//初始化
   for(var i = 0, len = this.tiles.length; i < len; i++){
    this.container.removeChild(this.tiles[i]);
   }
@@ -128,7 +128,7 @@ game2048.prototype = {
 
 var game, startBtn;
 
-window.onload = function(){
+window.onload = function(){//页面加载完后初始化game
  var container = document.getElementById('div2048');
  startBtn = document.getElementById('start');
  startBtn.onclick = function(){
@@ -138,7 +138,7 @@ window.onload = function(){
  }
 }
 
-window.onkeydown = function(e){
+window.onkeydown = function(e){//当点击了屏幕之后游戏开始
  var keynum, keychar;
  if(window.event){  // IE
   keynum = e.keyCode;
@@ -147,7 +147,7 @@ window.onkeydown = function(e){
   keynum = e.which;
  }
  keychar = String.fromCharCode(keynum);
- if(['W', 'S', 'A', 'D'].indexOf(keychar) > -1){
+ if(['W', 'S', 'A', 'D'].indexOf(keychar) > -1){//如果按下了w,s,a,d则判断游戏是否结束，如果没有结束则按方向移动
   if(game.over()){
    game.clean();
    startBtn.style.display = 'block';
